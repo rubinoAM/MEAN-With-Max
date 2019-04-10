@@ -6,7 +6,9 @@ import { Component } from '@angular/core';
 })
 
 export class PostCreateComponent{
-    savePost(){
-        alert('ARF')
+    post:string="";
+
+    savePost(newPost){
+        this.post = newPost;
     }
 }
