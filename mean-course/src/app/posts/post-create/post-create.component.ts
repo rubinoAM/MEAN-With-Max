@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
     selector:'app-post-create',
@@ -7,10 +7,15 @@ import { Component } from '@angular/core';
 })
 
 export class PostCreateComponent{
-    post:string="Type in some text above and save your post to overwrite this text.";
-    enteredPost:string="";
+    enteredTitle:string="";
+    enteredContent:string="";
+    @Output() postCreated = new EventEmitter();
 
     savePost(){
-        this.post = this.enteredPost;
+        const post = {
+            title:this.enteredTitle,
+            content:this.enteredContent,
+        };
+        this.postCreated.emit(post);
     }
 }
