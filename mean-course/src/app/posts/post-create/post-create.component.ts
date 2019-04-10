@@ -7,8 +7,9 @@ import { Component } from '@angular/core';
 
 export class PostCreateComponent{
     post:string="";
+    enteredPost:string="";
 
-    savePost(newPost:string){
-        this.post = newPost;
+    savePost(){
+        this.post = this.enteredPost;
     }
 }
