@@ -2,10 +2,6 @@ mat-form-field, textarea{
     width:100%;
 }
 
-.post-entry{
+.mat-raised-button{
     margin-top:20px;
-    min-height:50px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
 }
