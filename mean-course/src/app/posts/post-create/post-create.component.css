@@ -1,0 +1,20 @@
+mat-card{
+    width:80%;
+    margin:auto;
+}
+
+mat-form-field{
+    width:100%;
+}
+
+textarea{
+    width:100%;
+}
+
+.post-entry{
+    margin-top:20px;
+    min-height:50px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
