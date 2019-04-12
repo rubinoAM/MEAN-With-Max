@@ -22,11 +22,11 @@ const onError = (err)=>{
     }
     
     const bind = typeof port === "string" ? "pipe" + port : "port " + port;
-    if(error.code === "EACCES"){
+    if(err.code === "EACCES"){
         console.error(bind + " requires elevated privages");
         process.exit(1);
         return;
-    } else if (error.code === "EADDRINUSE"){
+    } else if (err.code === "EADDRINUSE"){
         console.error(bind + " is already in use");
         process.exit(1);
         return;
