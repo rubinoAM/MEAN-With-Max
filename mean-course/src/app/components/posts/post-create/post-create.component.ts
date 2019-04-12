@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Post } from '../../models/post.model';
+import { Post } from '../../../models/post.model';
 import { PostService } from 'src/app/components/services/post.service';
 
 @Component({
@@ -18,6 +18,7 @@ export class PostCreateComponent{
     savePost(form:NgForm){
         if(!form.invalid){
             const post:Post = {
+                id:null,
                 title:form.value.title,
                 content:form.value.content,
             };
