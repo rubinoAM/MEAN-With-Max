@@ -41,6 +41,7 @@ yarn-error.log
 testem.log
 /typings
 mongo_pw.txt
+config.js
 
 # System Files
 .DS_Store

@@ -1,8 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 const Post = require('./models/post');
+const mongoUrl = require('./config');
 
 const app = express();
+mongoose.connect(mongoUrl)
+    .then(()=>{
+        console.log('CONNECTED');
+    })
+    .catch(()=>{
+        console.log('FAILURE');
+    });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
