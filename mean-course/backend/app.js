@@ -19,12 +19,12 @@ app.use((req,res,next)=>{
 app.post('/api/posts',(req,res,next)=>{
     const post = req.body;
     console.log(post);
-    res.status(201),json({
+    res.status(201).json({
         message: 'Post added',
     });
 });
 
-app.use('/api/posts',(req,res,next)=>{
+app.get('/api/posts',(req,res,next)=>{
     const posts = [
         {
             id:'f48ha9sf',
