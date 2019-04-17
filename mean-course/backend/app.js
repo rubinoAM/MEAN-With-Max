@@ -44,13 +44,7 @@ app.get('/api/posts',(req,res,next)=>{
         //console.log(documents);
         res.status(200).json({
             message:'Posts fetched successfully',
-            posts:documents.map(document=>{
-                return{
-                    id:document._id,
-                    title:document.title,
-                    content:document.content,
-                }
-            })
+            posts:documents,
         });
     });
 });
