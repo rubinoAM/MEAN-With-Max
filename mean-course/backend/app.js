@@ -54,7 +54,7 @@ app.delete("/api/posts/:id",(req,res,next)=>{
         _id:req.params.id,
     }).then((result)=>{
         console.log(result)
-    })
+    }).catch((err)=>{throw err})
     res.status(200).json({
         message:'Post deleted',
     });
