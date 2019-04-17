@@ -35,9 +35,10 @@ export class PostService{
     }
 
     addPost(post:Post){
-        this.http.post<{message:string}>('http://localhost:4201/api/posts',post)
+        this.http.post<{message:string,postId:string}>('http://localhost:4201/api/posts',post)
             .subscribe((resData)=>{
-                console.log(resData.message);
+                const id = resData.postId;
+                post.id = id;
                 this.posts.push(post);
                 this.postsUpdated.next([...this.posts]);
             });
