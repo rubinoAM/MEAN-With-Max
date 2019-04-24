@@ -48,6 +48,16 @@ export class PostService{
             });
     }
 
+    updatePost(postId:string,post:Post){
+        const updatedPost:Post = {
+            id:postId,
+            title:post.title,
+            content:post.content
+        }
+        this.http.put("http://localhost:4201/api/posts/" + updatedPost.id,updatedPost)
+            .subscribe((result)=>{console.log(result)});
+    }
+
     deletePost(postId:string){
         console.log(postId);
         this.http.delete(`http://localhost:4201/api/posts/${postId}`)
