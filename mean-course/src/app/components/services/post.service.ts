@@ -34,6 +34,10 @@ export class PostService{
         return this.postsUpdated.asObservable();
     }
 
+    getPost(id:string){
+        return {...this.posts.find(p => p.id === id)};
+    }
+
     addPost(post:Post){
         this.http.post<{message:string,postId:string}>('http://localhost:4201/api/posts',post)
             .subscribe((resData)=>{
