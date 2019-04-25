@@ -20,7 +20,6 @@ router.get('',(req,res,next)=>{
     Post.find((err,results)=>{
         if(err){throw err}
     }).then(documents => {
-        //console.log(documents);
         res.status(200).json({
             message:'Posts fetched successfully',
             posts:documents,
@@ -32,14 +31,11 @@ router.get('/:id',(req,res,next)=>{
     Post.findById(req.params.id)
         .then(post => {
             if(post){
-                res.status(200).json({
-                    message:'Post found',
-                    post:post
-                })
+                res.status(200).json(post);
             } else {
                 res.status(404).json({
                     message:'Post not found'
-                })
+                });
             }
         });
 })
@@ -62,7 +58,7 @@ router.delete("/:id",(req,res,next)=>{
     Post.deleteOne({
         _id:req.params.id,
     }).then((result)=>{
-        console.log(result)
+        //console.log(result)
     }).catch((err)=>{throw err})
     res.status(200).json({
         message:'Post deleted',

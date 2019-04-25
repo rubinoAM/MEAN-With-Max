@@ -36,7 +36,7 @@ export class PostService{
     }
 
     getPost(id:string){
-        return { ...this.posts.find(p => p.id === id) };
+        return this.http.get<{_id:string, title:string, content:string}>('http://localhost:4201/api/posts/' + id);
     }
 
     addPost(post:Post){
@@ -68,10 +68,8 @@ export class PostService{
     }
 
     deletePost(postId:string){
-        console.log(postId);
         this.http.delete(`http://localhost:4201/api/posts/${postId}`)
             .subscribe(()=>{
-                console.log(this.posts);
                 const updatedPosts = this.posts.filter(post => {
                     if(post.id !== postId){return post};
                 });
