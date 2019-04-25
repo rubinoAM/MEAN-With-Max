@@ -1,17 +1,13 @@
 <h1>CREATE A POST</h1>
 <mat-card>
     <mat-spinner *ngIf="spinner"></mat-spinner>
-    <form (submit)="savePost(postForm)" #postForm="ngForm" *ngIf="!spinner">
+    <form [formGroup]="form" (submit)="savePost()" *ngIf="!spinner">
         <mat-form-field>
             <input type="text" 
             matInput 
-            [ngModel]="post?.title" 
-            name="title" 
-            required 
-            minlength="3"
-            #title="ngModel"
+            formControlName="title"
             placeholder="Post Title"/>
-            <mat-error *ngIf="title.invalid">Please enter a post title.</mat-error>
+            <mat-error *ngIf="form.get('title').invalid">Please enter a post title.</mat-error>
         </mat-form-field>
         <div>
             <button 
@@ -24,12 +20,9 @@
         <mat-form-field>
             <textarea matInput 
             rows="4" 
-            [ngModel]="post?.content"
-            name="content" 
-            required
-            #content="ngModel"
+            formControlName="content"
             placeholder="Post Content"></textarea>
-            <mat-error *ngIf="content.invalid">Please enter some post content.</mat-error>
+            <mat-error *ngIf="form.get('content').invalid">Please enter some post content.</mat-error>
         </mat-form-field>
         <button 
             mat-raised-button

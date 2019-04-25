@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Post } from '../../../models/post.model';
 import { PostService } from 'src/app/components/services/post.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
@@ -15,12 +15,22 @@ export class PostCreateComponent implements OnInit{
     enteredContent:string="";
     post:Post;
     spinner:boolean = false;
+    form:FormGroup;
     private mode:string="create";
     private postId:string;
 
-    constructor(public postService: PostService, public route: ActivatedRoute){}
+    constructor(
+        public postService: PostService,
+        public route: ActivatedRoute
+    ){}
 
     ngOnInit(){
+        this.form = new FormGroup({
+            'title':new FormControl(null, {validators:[
+                Validators.required, Validators.minLength(3)
+            ]}),
+            'content':new FormControl(null, {validators:[Validators.required]})
+        });
         this.route.paramMap.subscribe((paramMap:ParamMap)=>{
             if(paramMap.has('id')){
                 this.mode = 'edit';
@@ -33,6 +43,10 @@ export class PostCreateComponent implements OnInit{
                         title:postData.title,
                         content:postData.content
                     }
+                    this.form.setValue({
+                        'title':this.post.title,
+                        'content':this.post.content
+                    });
                 });
             } else {
                 this.mode = 'create';
@@ -41,12 +55,12 @@ export class PostCreateComponent implements OnInit{
         });
     }
 
-    savePost(form:NgForm){
-        if(!form.invalid){
+    savePost(){
+        if(!this.form.invalid){
             const newPost:Post = {
                 id:null,
-                title:form.value.title,
-                content:form.value.content,
+                title:this.form.value.title,
+                content:this.form.value.content,
             };
             this.spinner = true;
             if(this.mode === 'create'){
@@ -54,11 +68,11 @@ export class PostCreateComponent implements OnInit{
             } else if (this.mode === 'edit'){
                 this.postService.updatePost(
                     this.postId,
-                    form.value.title,
-                    form.value.content
+                    this.form.value.title,
+                    this.form.value.content
                 );
             }
-            form.resetForm();
+            this.form.reset();
         }
     }
 }
