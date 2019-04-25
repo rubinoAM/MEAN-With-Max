@@ -1,6 +1,7 @@
 <h1>CREATE A POST</h1>
 <mat-card>
-    <form (submit)="savePost(postForm)" #postForm="ngForm">
+    <mat-spinner *ngIf="spinner"></mat-spinner>
+    <form (submit)="savePost(postForm)" #postForm="ngForm" *ngIf="!spinner">
         <mat-form-field>
             <input type="text" 
             matInput 

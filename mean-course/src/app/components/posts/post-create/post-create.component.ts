@@ -14,6 +14,7 @@ export class PostCreateComponent implements OnInit{
     enteredTitle:string="";
     enteredContent:string="";
     post:Post;
+    spinner:boolean = false;
     private mode:string="create";
     private postId:string;
 
@@ -24,9 +25,9 @@ export class PostCreateComponent implements OnInit{
             if(paramMap.has('id')){
                 this.mode = 'edit';
                 this.postId = paramMap.get('id');
-
+                this.spinner = true;
                 this.postService.getPost(this.postId).subscribe(postData=>{
-
+                    this.spinner = false;
                     this.post = {
                         id:postData._id,
                         title:postData.title,
@@ -47,7 +48,7 @@ export class PostCreateComponent implements OnInit{
                 title:form.value.title,
                 content:form.value.content,
             };
-
+            this.spinner = true;
             if(this.mode === 'create'){
                 this.postService.addPost(newPost);
             } else if (this.mode === 'edit'){

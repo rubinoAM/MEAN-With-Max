@@ -5,3 +5,7 @@ mat-form-field, textarea{
 .mat-raised-button{
     margin-top:20px;
 }
+
+mat-spinner{
+    margin:auto;
+}
