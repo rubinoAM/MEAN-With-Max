@@ -17,6 +17,9 @@
                 (click)="imgFile.click()">Pick Image</button>
             <input type="file" #imgFile (change)="pickImage($event)"/>
         </div>
+        <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview">
+            <img [src]="imagePreview" [alt]="form.value.title"/>
+        </div>
         <mat-form-field>
             <textarea matInput 
             rows="4" 
