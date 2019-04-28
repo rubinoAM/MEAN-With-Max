@@ -61,11 +61,12 @@ export class PostService{
             });
     }
 
-    updatePost(id:string,title:string,content:string){
+    updatePost(id:string,title:string,content:string,imagePath:string){
         const updatedPost:Post = {
             id:id,
             title:title,
-            content:content
+            content:content,
+            imagePath:imagePath,
         }
         this.http.put("http://localhost:4201/api/posts/" + id,updatedPost)
             .subscribe((resp)=>{
