@@ -39,9 +39,18 @@ export class PostService{
         return this.http.get<{_id:string, title:string, content:string}>('http://localhost:4201/api/posts/' + id);
     }
 
-    addPost(post:Post){
-        this.http.post<{message:string,postId:string}>('http://localhost:4201/api/posts',post)
+    addPost(post:Post,image:File){
+        const postData = new FormData();
+        postData.append("title",post.title);
+        postData.append("content",post.content);
+        postData.append('image',image,post.title);
+        this.http.post<{message:string,postId:string}>('http://localhost:4201/api/posts',postData)
             .subscribe((resData)=>{
+                const newPost:Post = {
+                    id: resData.postId,
+                    title:post.title,
+                    content:post.content,
+                }
                 const id = resData.postId;
                 post.id = id;
                 this.posts.push(post);
