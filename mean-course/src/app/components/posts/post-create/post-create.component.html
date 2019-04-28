@@ -15,7 +15,7 @@
                 mat-stroked-button
                 color="primary"
                 (click)="imgFile.click()">Pick Image</button>
-            <input type="file" #imgFile />
+            <input type="file" #imgFile (change)="pickImage($event)"/>
         </div>
         <mat-form-field>
             <textarea matInput 
