@@ -16,7 +16,7 @@ export class PostCreateComponent implements OnInit{
     post:Post;
     spinner:boolean = false;
     form:FormGroup;
-    imagePreview:string | ArrayBuffer;
+    imagePreview:string;
     private mode:string="create";
     private postId:string;
 
@@ -67,7 +67,7 @@ export class PostCreateComponent implements OnInit{
         this.form.get('image').updateValueAndValidity();
         const reader = new FileReader();
         reader.onload = () => {
-            this.imagePreview = reader.result;
+            this.imagePreview = String(reader.result);
         }
         reader.readAsDataURL(file);
     }
