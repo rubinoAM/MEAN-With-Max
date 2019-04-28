@@ -40,6 +40,7 @@ export class PostService{
     }
 
     addPost(post:Post,image:File){
+        console.log(image, post);
         const postData = new FormData();
         postData.append("title",post.title);
         postData.append("content",post.content);
@@ -51,9 +52,8 @@ export class PostService{
                     title:post.title,
                     content:post.content,
                 }
-                const id = resData.postId;
-                post.id = id;
-                this.posts.push(post);
+                console.log(newPost);
+                this.posts.push(newPost);
                 this.postsUpdated.next([...this.posts]);
                 this.router.navigate(['/']);
             });

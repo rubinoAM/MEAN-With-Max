@@ -66,6 +66,7 @@ export class PostCreateComponent implements OnInit{
     pickImage(e:Event){
         const file = (e.target as HTMLInputElement).files[0];
         this.form.patchValue({image:file});
+        console.log(this.form.get('image'));
         this.form.get('image').updateValueAndValidity();
         const reader = new FileReader();
         reader.onload = () => {
@@ -81,9 +82,10 @@ export class PostCreateComponent implements OnInit{
                 title:this.form.value.title,
                 content:this.form.value.content,
             };
+            console.log(newPost)
             this.spinner = true;
             if(this.mode === 'create'){
-                this.postService.addPost(newPost);
+                this.postService.addPost(newPost,this.form.value.image);
             } else if (this.mode === 'edit'){
                 this.postService.updatePost(
                     this.postId,

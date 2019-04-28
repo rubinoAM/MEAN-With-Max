@@ -9,8 +9,6 @@ const MIME_TYPE_MAP = {
     'image/png':'png',
     'image/jpg':'jpg',
     'image/jpeg':'jpg',
-    'image/gif':'gif',
-    'image/bmp':'bmp',
 }
 const storage = multer.diskStorage({
     destination: (req,file,cb)=>{
@@ -29,7 +27,7 @@ const storage = multer.diskStorage({
     }
 });
 
-router.post('',multer(storage).single("image"),(req,res,next)=>{
+router.post('',multer({storage:storage}).single("image"),(req,res,next)=>{
     const post = new Post({
         title:req.body.title,
         content:req.body.content,
