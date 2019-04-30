@@ -8,7 +8,7 @@ const routes: Routes = [
     { path:'', component:PostListComponent },
     { path:'create', component:PostCreateComponent },
     { path:'edit/:id', component:PostCreateComponent },
-    { path:'login', component:LoginComponent}
+    { path:'login', component:LoginComponent }
 ];
 
 @NgModule({
