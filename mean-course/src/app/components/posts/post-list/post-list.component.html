@@ -18,7 +18,8 @@
 <mat-paginator 
   [length]="totalPosts"
   [pageSize]="postsPerPage"
-  [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="changePage($event)"></mat-paginator>
 <mat-card *ngIf="posts.length <= 0 && !spinner">
   <p>Type in some text above and save your post.</p>
 </mat-card>

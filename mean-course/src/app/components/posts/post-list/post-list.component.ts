@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { PageEvent } from '@angular/material';
 import { Post } from '../../../models/post.model';
 import { PostService } from '../../services/post.service';
 
@@ -30,6 +31,10 @@ export class PostListComponent implements OnInit, OnDestroy{
 
   onDelete(postId:string){
     this.postService.deletePost(postId);
+  }
+
+  changePage(pageData:PageEvent){
+    console.log(pageData);
   }
 
   ngOnDestroy(){
