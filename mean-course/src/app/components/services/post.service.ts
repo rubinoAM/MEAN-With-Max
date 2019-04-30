@@ -37,7 +37,7 @@ export class PostService{
     }
 
     getPost(id:string){
-        return this.http.get<{_id:string, title:string, content:string}>('http://localhost:4201/api/posts/' + id);
+        return this.http.get<{_id:string, title:string, content:string, imagePath:string}>('http://localhost:4201/api/posts/' + id);
     }
 
     addPost(post:Post,image:File){
@@ -61,18 +61,33 @@ export class PostService{
             });
     }
 
-    updatePost(id:string,title:string,content:string,imagePath:string){
-        const updatedPost:Post = {
-            id:id,
-            title:title,
-            content:content,
-            imagePath:imagePath,
+    updatePost(id:string,title:string,content:string,image:string|File){
+        let postData:Post|FormData;
+        if(typeof(image)==='object'){
+            postData = new FormData();
+            postData.append("id",id);
+            postData.append("title",title);
+            postData.append("content",content);
+            postData.append('image',image,title);
+        } else {
+            postData = {
+                id:id,
+                title:title,
+                content:content,
+                imagePath:image,
+            }
         }
-        this.http.put("http://localhost:4201/api/posts/" + id,updatedPost)
+        this.http.put("http://localhost:4201/api/posts/" + id,postData)
             .subscribe((resp)=>{
                 const updatedPosts = [...this.posts];
-                const oldPostIndex = updatedPosts.findIndex(p => p.id === updatedPost.id);
-                updatedPosts[oldPostIndex] = updatedPost;
+                const oldPostIndex = updatedPosts.findIndex(p => p.id === id);
+                const post:Post = {
+                    id:id,
+                    title:title,
+                    content:content,
+                    imagePath:"",
+                }
+                updatedPosts[oldPostIndex] = post;
                 this.posts = updatedPosts;
                 this.postsUpdated.next([...this.posts]);
                 this.router.navigate(['/']);
