@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const mongoUrl = require('./config');
 const postsRoutes = require('./routes/posts');
+const authRoutes = require('./routes/auth');
 
 const app = express();
 mongoose.connect(mongoUrl)
@@ -29,5 +30,6 @@ app.use((req,res,next)=>{
 });
 
 app.use('/api/posts', postsRoutes);
+app.use('/api/auth', authRoutes);
 
 module.exports = app;
