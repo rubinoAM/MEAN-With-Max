@@ -13,10 +13,10 @@ import { PostService } from '../../services/post.service';
 export class PostListComponent implements OnInit, OnDestroy{
   posts:Post[]=[];
   spinner:boolean = false;
-  totalPosts = 10;
-  postsPerPage = 2;
-  currentPage = 1;
-  pageSizeOptions = [2,5,10];
+  totalPosts:number = 0;
+  postsPerPage:number = 2;
+  currentPage:number = 1;
+  pageSizeOptions:number[] = [2,5,10];
   private postsSub:Subscription;
 
   constructor(public postService:PostService){}
@@ -24,14 +24,18 @@ export class PostListComponent implements OnInit, OnDestroy{
   ngOnInit(){
     this.spinner = true;
     this.postService.getPosts(this.postsPerPage,this.currentPage);
-    this.postsSub = this.postService.getPostUpdateListener().subscribe((posts:Post[])=>{
-      this.spinner = false;
-      this.posts = posts;
-    });
+    this.postsSub = this.postService.getPostUpdateListener()
+      .subscribe((postData:{posts:Post[],postCount:number})=>{
+        this.spinner = false;
+        this.totalPosts = postData.postCount;
+        this.posts = postData.posts;
+      });
   };
 
   onDelete(postId:string){
-    this.postService.deletePost(postId);
+    this.postService.deletePost(postId).subscribe(()=>{
+      this.postService.getPosts(this.postsPerPage,this.currentPage);
+    });
   }
 
   changePage(pageData:PageEvent){
