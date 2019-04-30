@@ -23,4 +23,4 @@
   [pageSize]="postsPerPage"
   [pageSizeOptions]="pageSizeOptions"
   (page)="changePage($event)"
-  *ngIf="!spinner"></mat-paginator>
+  *ngIf="posts.length > 0"></mat-paginator>
