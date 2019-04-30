@@ -12,6 +12,9 @@ import { PostService } from '../../services/post.service';
 export class PostListComponent implements OnInit, OnDestroy{
   posts:Post[]=[];
   spinner:boolean = false;
+  totalPosts = 10;
+  postsPerPage = 2;
+  pageSizeOptions = [2,5,10];
   private postsSub:Subscription;
 
   constructor(public postService:PostService){}
