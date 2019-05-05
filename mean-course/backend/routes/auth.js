@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 
@@ -43,10 +44,14 @@ router.post('/login',(req,res,next)=>{
                     message:'Auth failed',
                 });
             }
-            return res.status(201).json({
-                message:'Login success',
-                result:result,
-            })
+            const token = jwt.sign(
+                {
+                    email:user.email,
+                    userId:user._id
+                },
+                'hash_secret_166552afbf222226e68edea13ce6121a',
+                {expiresIn: '1h'}
+            );
         })
         .catch((err)=> {
             res.status(500).json({
