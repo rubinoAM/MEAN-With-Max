@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const config = require('../config');
 
 const User = require('../models/user');
 
@@ -51,7 +52,7 @@ router.post('/login',(req,res,next)=>{
                     email:fetchedUser.email,
                     userId:fetchedUser._id
                 },
-                'hash_secret_166552afbf222226e68edea13ce6121a',
+                config.secretHash,
                 {expiresIn: '1h'}
             );
             res.status(200).json({

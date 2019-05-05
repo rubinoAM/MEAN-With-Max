@@ -2,12 +2,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
-const mongoUrl = require('./config');
+const config = require('./config');
 const postsRoutes = require('./routes/posts');
 const authRoutes = require('./routes/auth');
 
 const app = express();
-mongoose.connect(mongoUrl)
+mongoose.connect(config.mongoUrl)
     .then(()=>{
         console.log('CONNECTED');
     })
