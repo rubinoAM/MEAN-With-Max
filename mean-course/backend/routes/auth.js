@@ -33,7 +33,7 @@ router.post('/login',(req,res,next)=>{
         .then(user =>{
             if(!user){
                 return res.status(401).json({
-                    message:'Auth failed',
+                    message:'Login failed',
                 });
             }
             return bcrypt.compare(req.body.password, user.password);
@@ -41,7 +41,7 @@ router.post('/login',(req,res,next)=>{
         .then(result =>{
             if(!result){
                 return res.status(401).json({
-                    message:'Auth failed',
+                    message:'Login failed',
                 });
             }
             const token = jwt.sign(
@@ -52,6 +52,10 @@ router.post('/login',(req,res,next)=>{
                 'hash_secret_166552afbf222226e68edea13ce6121a',
                 {expiresIn: '1h'}
             );
+            res.status(200).json({
+                message:'Login sucessful',
+                token:token,
+            })
         })
         .catch((err)=> {
             res.status(500).json({
