@@ -28,7 +28,15 @@ router.post('/signup',(req,res,next)=>{
 })
 
 router.post('/login',(req,res,next)=>{
-    
-})
+    User.findOne({email:req.body.email})
+        .then(user =>{
+            if(!user){
+                return res.status(401).json({
+                    message:'Auth failed',
+                });
+            }
+            
+        });
+});
 
 module.exports = router;
