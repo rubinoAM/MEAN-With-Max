@@ -14,6 +14,7 @@ export class LoginComponent {
 
     onLogin(form:NgForm){
         if(!form.invalid){
+            this.spinner = true;
             this.authService.login(form.value.email,form.value.password);
         }
     }

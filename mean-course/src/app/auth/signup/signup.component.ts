@@ -14,6 +14,7 @@ export class SignupComponent {
 
     onSignup(form:NgForm){
         if(!form.invalid){
+            this.spinner = true;
             this.authService.createUser(form.value.email,form.value.password);
         }
     }
