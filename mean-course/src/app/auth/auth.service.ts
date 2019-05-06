@@ -33,10 +33,8 @@ export class AuthService{
 
     createUser(email:string,password:string){
         const authData:AuthData = {email:email,password:password};
-        this.http.post("http://localhost:4201/api/auth/signup",authData)
-            .subscribe(resp => {
-                console.log(resp)
-            })
+        return this.http
+            .post("http://localhost:4201/api/auth/signup",authData);
     }
 
     login(email:string,password:string){
