@@ -34,12 +34,18 @@ export class AuthService{
     createUser(email:string,password:string){
         const authData:AuthData = {email:email,password:password};
         return this.http
-            .post("http://localhost:4201/api/auth/signup",authData);
+            .post("http://localhost:4201/api/auth/signup",authData)
+            .subscribe(resp => {
+                this.router.navigate(['/']);
+            }, err => {
+                this.authStatus.next(false);
+            })
     }
 
     login(email:string,password:string){
         const authData:AuthData = {email:email,password:password};
-        this.http.post<{token:string,expiresIn:number,userId:string}>("http://localhost:4201/api/auth/login",authData)
+        this.http
+            .post<{token:string,expiresIn:number,userId:string}>("http://localhost:4201/api/auth/login",authData)
             .subscribe(resp => {
                 const token = resp.token;
                 this.token = token;
@@ -54,6 +60,8 @@ export class AuthService{
                     this.saveAuthData(token,expDate,this.userId);
                     this.router.navigate(['/']);
                 }
+            }, err => {
+                this.authStatus.next(false);
             })
     }
 
