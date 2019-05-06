@@ -47,6 +47,9 @@ export class AuthService{
                     },expiresIn * 1000);
                     this.isAuth = true;
                     this.authStatus.next(true);
+                    const now = new Date();
+                    const expDate = new Date(now.getTime() + expiresIn * 1000);
+                    this.saveAuthData(token,expDate);
                     this.router.navigate(['/']);
                 }
             })
@@ -57,6 +60,17 @@ export class AuthService{
         this.isAuth = false;
         this.authStatus.next(false);
         clearTimeout(this.tokenTimer);
+        this.clearAuthData();
         this.router.navigate(['/']);
+    }
+
+    private saveAuthData(token:string,expirationDate:Date){
+        localStorage.setItem('token',token);
+        localStorage.setItem('expDate',expirationDate.toISOString());
+    }
+
+    private clearAuthData(){
+        localStorage.removeItem('token');
+        localStorage.removeItem('expDate');
     }
 }
