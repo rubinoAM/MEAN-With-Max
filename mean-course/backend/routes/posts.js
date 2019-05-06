@@ -94,11 +94,17 @@ router.put('/:id',checkAuth,multer({storage:storage}).single("image"),(req,res,n
         content:req.body.content,
         imagePath:imagePath,
     });
-    Post.updateOne({_id:req.params.id},updatedPost)
+    Post.updateOne({_id:req.params.id,creator:req.userData.userId},updatedPost)
         .then((result) => {
-            res.status(201).json({
-                message:'Post updated successfully'
-            })
+            if(result.nModified > 0){
+                res.status(201).json({
+                    message:'Post updated successfully.'
+                })
+            } else {
+                res.status(401).json({
+                    message:'You are not authorized to update this post.'
+                })
+            }
         });
 })
 
