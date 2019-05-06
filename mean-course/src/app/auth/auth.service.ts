@@ -9,6 +9,7 @@ import { AuthData } from '../models/auth-data.model';
 export class AuthService{
     private token:string;
     private authStatus = new Subject<boolean>();
+    private tokenTimer:any;
     private isAuth:boolean = false;
 
     constructor(private http:HttpClient, private router:Router){}
@@ -35,11 +36,15 @@ export class AuthService{
 
     login(email:string,password:string){
         const authData:AuthData = {email:email,password:password};
-        this.http.post<{token:string}>("http://localhost:4201/api/auth/login",authData)
+        this.http.post<{token:string,expiresIn:number}>("http://localhost:4201/api/auth/login",authData)
             .subscribe(resp => {
                 const token = resp.token;
                 this.token = token;
                 if(token){
+                    const expiresIn = resp.expiresIn;
+                    this.tokenTimer = setTimeout(()=>{
+                        this.logout();
+                    },expiresIn * 1000);
                     this.isAuth = true;
                     this.authStatus.next(true);
                     this.router.navigate(['/']);
@@ -51,6 +56,7 @@ export class AuthService{
         this.token = null;
         this.isAuth = false;
         this.authStatus.next(false);
+        clearTimeout(this.tokenTimer);
         this.router.navigate(['/']);
     }
 }
