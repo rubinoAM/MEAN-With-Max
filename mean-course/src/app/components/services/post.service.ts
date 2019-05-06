@@ -24,6 +24,7 @@ export class PostService{
                         content:post.content,
                         id:post._id,
                         imagePath:post.imagePath,
+                        creator:post.creator,
                     }
                 }), maxPosts:postData.maxPosts}
             }))
