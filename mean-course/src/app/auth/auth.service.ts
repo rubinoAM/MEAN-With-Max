@@ -55,6 +55,9 @@ export class AuthService{
 
     autoAuthUser(){
         const authData = this.getAuthData();
+        if(!authData){
+            return;
+        }
         const now = new Date();
         const isInFuture = authData.expDate.getTime() - now.getTime();
         if(isInFuture > 0){
