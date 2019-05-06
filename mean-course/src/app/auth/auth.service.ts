@@ -8,11 +8,16 @@ import { AuthData } from '../models/auth-data.model';
 export class AuthService{
     private token:string;
     private authStatus = new Subject<boolean>();
+    private isAuth:boolean = false;
 
     constructor(private http:HttpClient){}
 
     getToken(){
         return this.token;
+    }
+
+    getIsAuth(){
+        return this.isAuth;
     }
 
     getAuthStatus(){
@@ -33,7 +38,10 @@ export class AuthService{
             .subscribe(resp => {
                 const token = resp.token;
                 this.token = token;
-                this.authStatus.next(true);
+                if(token){
+                    this.isAuth = true;
+                    this.authStatus.next(true);
+                }
             })
     }
 }
