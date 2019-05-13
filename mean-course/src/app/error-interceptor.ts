@@ -13,7 +13,6 @@ export class ErrorInterceptor implements HttpInterceptor {
         return next.handle(req)
             .pipe(catchError((err:HttpErrorResponse)=>{
                 let errMsg = "An unknown error has occurred.";
-                console.log(err.error);
                 if(err.error.message){
                     errMsg = err.error.message;
                 }
