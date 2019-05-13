@@ -4,16 +4,7 @@ import {
   ReactiveFormsModule,
   FormsModule 
 } from '@angular/forms';
-import { 
-  MatInputModule, 
-  MatCardModule, 
-  MatButtonModule, 
-  MatToolbarModule, 
-  MatExpansionModule, 
-  MatProgressSpinnerModule, 
-  MatPaginatorModule, 
-  MatDialogModule
-} from '@angular/material';
+import { AngularMaterialModule } from './angular-material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -41,18 +32,11 @@ import { ErrorComponent } from './error/error.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MatInputModule,
-    MatCardModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatExpansionModule,
-    MatProgressSpinnerModule,
-    MatPaginatorModule,
-    MatDialogModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    AngularMaterialModule
   ],
   providers: [
     {
