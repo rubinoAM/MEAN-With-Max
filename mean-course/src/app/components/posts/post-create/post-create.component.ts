@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Subscription } from 'rxjs';
+
+import { mimeType } from './mime-type.validator';
 import { Post } from '../../../models/post.model';
 import { PostService } from 'src/app/components/services/post.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { mimeType } from './mime-type.validator';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
     selector:'app-post-create',
@@ -11,7 +14,7 @@ import { mimeType } from './mime-type.validator';
     styleUrls: ['./post-create.component.css']
 })
 
-export class PostCreateComponent implements OnInit{
+export class PostCreateComponent implements OnInit, OnDestroy{
     enteredTitle:string="";
     enteredContent:string="";
     post:Post;
@@ -20,13 +23,20 @@ export class PostCreateComponent implements OnInit{
     imagePreview:string;
     private mode:string="create";
     private postId:string;
+    private authStatus:Subscription;
 
     constructor(
         public postService: PostService,
-        public route: ActivatedRoute
+        public route: ActivatedRoute,
+        public authService: AuthService
     ){}
 
     ngOnInit(){
+        this.authStatus = this.authService.getAuthStatus().subscribe(
+            authState => {
+                this.spinner = false;
+            }
+        );
         this.form = new FormGroup({
             'title':new FormControl(null, {
                 validators:[Validators.required, Validators.minLength(3)]
@@ -69,7 +79,6 @@ export class PostCreateComponent implements OnInit{
     pickImage(e:Event){
         const file = (e.target as HTMLInputElement).files[0];
         this.form.patchValue({image:file});
-        //console.log(this.form.get('image'));
         this.form.get('image').updateValueAndValidity();
         const reader = new FileReader();
         reader.onload = () => {
@@ -87,7 +96,6 @@ export class PostCreateComponent implements OnInit{
                 imagePath:this.form.value.image,
                 creator:null,
             };
-            console.log(newPost)
             this.spinner = true;
             if(this.mode === 'create'){
                 this.postService.addPost(newPost,this.form.value.image);
@@ -101,5 +109,9 @@ export class PostCreateComponent implements OnInit{
             }
             this.form.reset();
         }
+    }
+
+    ngOnDestroy(){
+        this.authStatus.unsubscribe();
     }
 }
